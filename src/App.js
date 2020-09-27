@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./Routes/Routes";
+import Nav from "./Components/Nav";
+import { useDispatch } from "react-redux";
+import userActions from "./redux/actions";
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+  const user = localStorage.getItem("user");
+  if (!!user) {
+    dispatch(userActions.loginUserToDB(JSON.parse(user)));
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Nav />
+      <Routes />
+    </Router>
   );
-}
+};
 
 export default App;
